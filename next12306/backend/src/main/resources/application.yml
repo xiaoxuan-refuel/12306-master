@@ -1,0 +1,10 @@
+spring:
+  profiles:
+    include: common
+  mvc:
+    view:
+      prefix: /pages/
+      suffix: .jsp
+logging:
+  pattern:
+    console: "%d{MM-dd HH:mm:ss.SSS} %contextName [%thread] %-5level %logger{36} - %msg%n"
