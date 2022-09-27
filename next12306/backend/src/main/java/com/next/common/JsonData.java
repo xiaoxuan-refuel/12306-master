@@ -1,6 +1,8 @@
 package com.next.common;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @Title: JsonData
@@ -8,7 +10,8 @@ import lombok.Data;
  * @author: tjx
  * @date :2022/9/19 21:51
  */
-@Data
+@Getter
+@Setter
 public class JsonData {
     private final static Integer SYSTEM_ERROR = 1;//默认为1 表示失败
     private String msg;

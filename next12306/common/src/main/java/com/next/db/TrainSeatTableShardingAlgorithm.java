@@ -2,6 +2,7 @@ package com.next.db;
 
 import io.shardingsphere.api.algorithm.sharding.PreciseShardingValue;
 import io.shardingsphere.api.algorithm.sharding.standard.PreciseShardingAlgorithm;
+import lombok.val;
 
 import java.util.Collection;
 
@@ -15,10 +16,11 @@ public class TrainSeatTableShardingAlgorithm implements PreciseShardingAlgorithm
     private static final String PREFIX = "train_seat_";
 
     private String determineTable(int val){
-        if(val % 10 == 0){
-            val = 10;
+        int table = val % 10;
+        if(table == 0){
+            table = 10;
         }
-        return PREFIX + val;
+        return PREFIX + table;
     }
 
 

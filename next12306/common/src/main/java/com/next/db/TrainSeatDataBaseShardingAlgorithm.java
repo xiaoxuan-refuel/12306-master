@@ -16,10 +16,11 @@ public class TrainSeatDataBaseShardingAlgorithm implements PreciseShardingAlgori
 
     private String determineDB(int val){
         //val取余5值为1、2、3、4的库直接落到对应的库中，当取余5为0时直接将库落到库5中
-        if(val % 5 == 0){
-            val = 5;
+        int db = val % 5;
+        if(db == 0){
+            db = 5;
         }
-        return PREFIX + val;
+        return PREFIX + db;
     }
 
     @Override

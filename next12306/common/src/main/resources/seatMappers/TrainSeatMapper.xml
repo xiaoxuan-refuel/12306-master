@@ -20,7 +20,7 @@
     <result column="to_station_id" property="toStationId" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, ticket, user_id, traveller_id, train_number_id, carriage_number, row_number, 
+    id, ticket, user_id, traveller_id, train_number_id, carriage_number, `row_number`,
     seat_number, seat_level, train_start, train_end, money, show_number, status, from_station_id, 
     to_station_id
   </sql>
@@ -37,7 +37,7 @@
   <insert id="insert" parameterType="com.next.model.TrainSeat" >
     insert into train_seat (id, ticket, user_id, 
       traveller_id, train_number_id, carriage_number, 
-      row_number, seat_number, seat_level, 
+      `row_number`, seat_number, seat_level,
       train_start, train_end, money, 
       show_number, status, from_station_id, 
       to_station_id)
@@ -220,5 +220,73 @@
       from_station_id = #{fromStationId,jdbcType=INTEGER},
       to_station_id = #{toStationId,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <insert id="batchInsert" parameterType="list">
+    insert into train_seat (ticket, train_number_id, carriage_number,
+                            `row_number`, seat_number, seat_level,
+                            train_start, train_end, money,
+                            show_number, status, from_station_id,
+                            to_station_id)
+    values
+    <foreach collection="list" item="detail" separator=",">
+      (#{detail.ticket,jdbcType=VARCHAR},  #{detail.trainNumberId,jdbcType=INTEGER}, #{detail.carriageNumber,jdbcType=INTEGER},
+      #{detail.rowNumber,jdbcType=INTEGER}, #{detail.seatNumber,jdbcType=INTEGER}, #{detail.seatLevel,jdbcType=INTEGER},
+      #{detail.trainStart,jdbcType=TIMESTAMP}, #{detail.trainEnd,jdbcType=TIMESTAMP}, #{detail.money,jdbcType=INTEGER},
+      #{detail.showNumber,jdbcType=VARCHAR}, #{detail.status,jdbcType=INTEGER}, #{detail.fromStationId,jdbcType=INTEGER},
+      #{detail.toStationId,jdbcType=INTEGER})
+    </foreach>
+  </insert>
+
+  <select id="searchList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from train_seat
+    where train_number_id =#{trainNumberId}
+    and ticket = #{ticket}
+    <if test="carriageNum != null">
+      and carriage_number = #{carriageNum}
+    </if>
+    <if test="rowNum != null">
+      and `row_number` = #{rowNum}
+    </if>
+    <if test="seatNum != null">
+      and seat_number = #{seatNum}
+    </if>
+    <if test="status != null">
+      and status = #{status}
+    </if>
+    limit ${offset},${pageSize}
+  </select>
+
+  <select id="countList" resultType="java.lang.Integer">
+    select
+        count(*)
+    from train_seat
+    where train_number_id =#{trainNumberId}
+    and ticket = #{ticket}
+    <if test="carriageNum != null">
+      and carriage_number = #{carriageNum}
+    </if>
+    <if test="rowNum != null">
+      and `row_number` = #{rowNum}
+    </if>
+    <if test="seatNum != null">
+      and seat_number = #{seatNum}
+    </if>
+    <if test="status != null">
+      and status = #{status}
+    </if>
+  </select>
+
+  <update id="batchPublish">
+      update train_seat
+      set status = 1
+      where id in
+      <foreach collection="trainSeatIdList" item="id" separator="," open="(" close=")">
+        #{id}
+      </foreach>
+      and train_number_id =#{trainNumberId}
+      and status = 0;
   </update>
 </mapper>
