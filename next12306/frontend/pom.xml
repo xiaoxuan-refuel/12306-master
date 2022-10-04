@@ -137,17 +137,23 @@
         <dependency>
             <groupId>org.elasticsearch.client</groupId>
             <artifactId>elasticsearch-rest-high-level-client</artifactId>
-            <version>6.2.4</version>
+            <version>7.6.1</version>
         </dependency>
         <dependency>
             <groupId>org.elasticsearch.client</groupId>
             <artifactId>elasticsearch-rest-client</artifactId>
-            <version>6.2.4</version>
+            <version>7.6.1</version>
         </dependency>
         <dependency>
             <groupId>org.elasticsearch</groupId>
             <artifactId>elasticsearch</artifactId>
-            <version>6.2.4</version>
+            <version>7.6.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.next</groupId>
+            <artifactId>common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
         <!-- 分库分表 -->
@@ -158,15 +164,15 @@
         </dependency>
 
         <!-- rabbitmq -->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-amqp</artifactId>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.amqp</groupId>-->
-<!--            <artifactId>spring-amqp</artifactId>-->
-<!--            <version>2.2.3.RELEASE</version>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.amqp</groupId>
+            <artifactId>spring-amqp</artifactId>
+            <version>2.2.3.RELEASE</version>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>

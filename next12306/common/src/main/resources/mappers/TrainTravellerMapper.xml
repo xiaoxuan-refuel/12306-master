@@ -138,4 +138,13 @@
       email = #{email,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <select id="getByIdList" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"></include>
+    from train_traveller
+    where id in
+    <foreach collection="idList" item="id" open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+  </select>
 </mapper>

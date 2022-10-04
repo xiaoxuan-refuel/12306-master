@@ -5,6 +5,16 @@ spring:
     view:
       prefix: /pages/
       suffix: .jsp
+  redis:
+    host: ${tjx.host}
+    port: 6379
+  rabbitmq:
+    host: ${tjx.host}
+    username: admin
+    password: admin
 logging:
   pattern:
     console: "%d{MM-dd HH:mm:ss.SSS} %contextName [%thread] %-5level %logger{36} - %msg%n"
+
+tjx:
+  host: 192.168.3.235

@@ -68,4 +68,10 @@
       traveller_id = #{travellerId,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <select id="getByUserId" resultType="java.lang.Long">
+    select traveller_id
+    from train_user_traveller
+    where user_id = #{userId}
+  </select>
 </mapper>
