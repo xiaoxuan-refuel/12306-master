@@ -47,6 +47,8 @@ public class TrainSeatService {
     private TrainNumberDetailMapper trainNumberDetailMapper;
     @Autowired
     private TrainSeatMapper trainSeatMapper;
+    @Autowired
+    private TrainSeatService trainSeatService;
 
     public List<TrainSeat> searchList(TrainSeatSearchParam param, PageQuery pageQuery){
         BeanValidator.check(param);
@@ -123,7 +125,9 @@ public class TrainSeatService {
             }
             formLocalDateTime = formLocalDateTime.plusMinutes(trainNumberDetail.getRelativeMinute() + trainNumberDetail.getWaitMinute());
         }
-        batchInsertSeat(trainSeatList);
+        //注意：这里通过自己注入自己的方式 调用batchInsertSeat避免事务失效，如果直接调用batchInsertSeat方法事务会失效
+        // 在spring事务中调用batchInsertSeat方法是通过代理对象去执行，而不是当前对象
+        trainSeatService.batchInsertSeat(trainSeatList);
     }
 
     @Transactional(rollbackFor = Exception.class)
