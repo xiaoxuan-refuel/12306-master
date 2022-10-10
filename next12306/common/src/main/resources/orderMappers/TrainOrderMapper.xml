@@ -209,4 +209,15 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  <select id="getByOrderId" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+    from train_order
+    where order_id = #{orderId}
+  </select>
+
+  <select id="getByUserId" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+    from train_order
+    where user_id = #{userId}
+  </select>
 </mapper>

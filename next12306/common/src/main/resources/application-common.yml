@@ -14,7 +14,7 @@ spring:
   datasource-order:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://192.168.3.235:3306/t_train_order?characterEncoding=UTF-8&useSSL=false&useUnicode=true&connectTimeout=1000&socketTimeout=60000&allowMultiQueries=true&serverTimezone=Asia/Shanghai
+    jdbc-url: jdbc:mysql://192.168.3.235:3306/t_train_order?characterEncoding=UTF-8&useSSL=false&useUnicode=true&connectTimeout=1000&socketTimeout=60000&allowMultiQueries=true&serverTimezone=Asia/Shanghai
     username: root
     password: 123456
   datasource-seat-1:

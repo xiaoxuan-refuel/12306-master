@@ -1,6 +1,9 @@
 package com.next.orderDao;
 
 import com.next.model.TrainOrderDetail;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface TrainOrderDetailMapper {
     int deleteByPrimaryKey(Long id);
@@ -14,4 +17,7 @@ public interface TrainOrderDetailMapper {
     int updateByPrimaryKeySelective(TrainOrderDetail record);
 
     int updateByPrimaryKey(TrainOrderDetail record);
+
+    List<TrainOrderDetail> getByParentOrderId(@Param("parentOrderIdList") List<String> parentOrderIdList);
+
 }

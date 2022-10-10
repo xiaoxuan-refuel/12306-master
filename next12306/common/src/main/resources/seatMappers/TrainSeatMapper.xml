@@ -289,4 +289,59 @@
       and train_number_id =#{trainNumberId}
       and status = 0;
   </update>
+
+  <select id="getToPlaceSeatList" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+    from train_seat
+    where train_number_id =#{trainNumberId}
+    and carriage_number = #{carriageNum}
+    and `row_number` = #{rowNum}
+    and seat_number = #{seatNum}
+    and status = 1
+    and from_station_id in
+    <foreach collection="fromStationIdList" item="fromStationId" open="(" close=")" separator=",">
+      #{fromStationId}
+    </foreach>
+    and ticket = #{ticket}
+    order by train_start
+  </select>
+
+  <update id="batchUpdateSeat" >
+    update train_seat
+    set status = 2,user_id=#{userId},traveller_id=#{travellerId}
+    where train_number_id = #{trainNumberId}
+    and id in
+    <foreach collection="idList" item="id" open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+    and status = 1
+  </update>
+
+  <update id="batchRollbackPlace" >
+    update train_seat
+    set status = 1,user_id = 0,traveller_id = 0
+    where train_number_id = #{trainSeat.trainNumberId}
+    and carriage_number = #{trainSeat.carriageNumber}
+    and `row_number` = #{trainSeat.rowNumber}
+    and seat_number = #{trainSeat.seatNumber}
+    and from_station_id in
+    <foreach collection="fromStationIdList" item="fromStationId" open="(" close=")" separator=",">
+      #{fromStationId}
+    </foreach>
+    and traveller_id = #{trainSeat.travellerId}
+    and user_id = #{trainSeat.userId}
+    and status = 2
+  </update>
+
+  <update id="cancelSeat" >
+    update train_seat
+    set status = 1,user_id = 0,traveller_id = 0
+    where train_number_id = #{trainNumberId}
+    and carriage_number = #{carriageNum}
+    and `row_number` = #{rowNum}
+    and seat_number = #{seatNum}
+    and traveller_id = #{travellerId}
+    and user_id = #{userId}
+    and ticket = #{ticket}
+  </update>
 </mapper>
