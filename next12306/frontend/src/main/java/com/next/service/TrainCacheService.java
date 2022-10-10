@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import redis.clients.jedis.ShardedJedis;
 import redis.clients.jedis.ShardedJedisPool;
 
+import java.util.Map;
+
 /**
  * @Title: TrainCacheService
  * @Description: redis操作类
@@ -78,6 +80,19 @@ public class TrainCacheService {
             return shardedJedis.hget(key1, key2);
         } catch (Exception e) {
             log.error("jedis hset exception key1:{},key2:{}",key1,key2,e);
+            throw e;
+        } finally {
+            safeClose(shardedJedis);
+        }
+    }
+
+    public Map<String, String> hgetAll(String key1){
+        ShardedJedis shardedJedis = null;
+        try {
+            shardedJedis = getInstance();
+            return shardedJedis.hgetAll(key1);
+        } catch (Exception e) {
+            log.error("jedis hset exception key1:{}",key1,e);
             throw e;
         } finally {
             safeClose(shardedJedis);
